@@ -14,7 +14,17 @@ import { useState, useMemo } from "react"
 export default function AnalyticsPage() {
   const { user } = useAuth()
   const [isRefreshing, setIsRefreshing] = useState(false)
-  const analyticsData = useMemo(() => (user ? generateAnalyticsData(user.brand) : null), [user])
+  const analyticsData = useMemo(() => {
+  return user
+    ? generateAnalyticsData(user.brand)
+    : {
+        brandTrends: [],
+        materialBreakdown: [],
+        timeSeriesData: [],
+        confidenceDistribution: [],
+      }
+}, [user])
+
 
   if (!user) return null
 

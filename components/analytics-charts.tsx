@@ -92,7 +92,7 @@ export function AnalyticsCharts({ data, brand }: AnalyticsChartsProps) {
                   cy="50%"
                   outerRadius={80}
                   dataKey="count"
-                  label={({ material, percentage }) => `${material}: ${percentage.toFixed(1)}%`}
+                  // label={({ material, percentage }) => `${material}: ${percentage.toFixed(1)}%`}
                 >
                   {data.materialBreakdown.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />

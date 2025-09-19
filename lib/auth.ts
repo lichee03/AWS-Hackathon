@@ -3,7 +3,7 @@ export interface User {
   id: string
   email: string
   brand: string
-  role: "admin" | "brand_user"
+  role: "admin" | "brand"  
 }
 
 export interface BrandData {
@@ -24,13 +24,13 @@ export function verifyToken(token: string): User | null {
         id: "1",
         email: "admin@coca-cola.com",
         brand: "Coca-Cola",
-        role: "brand_user",
+        role: "brand",
       },
       "pepsi-token": {
         id: "2",
         email: "admin@pepsi.com",
         brand: "Pepsi",
-        role: "brand_user",
+        role: "brand",
       },
       "admin-token": {
         id: "3",
