@@ -32,7 +32,6 @@ export const brandColors = {
 }
 
 export function generateAnalyticsData(brand: string): AnalyticsData {
-  // Generate mock data based on brand
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
   const brandTrends = months.map((month) => ({
@@ -42,17 +41,22 @@ export function generateAnalyticsData(brand: string): AnalyticsData {
   }))
 
   const materials = ["Plastic Bottle", "Aluminum Can", "Glass Bottle", "Cardboard", "Plastic Wrapper"]
-  const totalCount = 1000
 
-  const materialBreakdown = materials.map((material, index) => {
+  const rawMaterials = materials.map((material, index) => {
     const count = Math.floor(Math.random() * 200) + 50
     return {
       material,
       count,
-      percentage: (count / totalCount) * 100,
       color: Object.values(brandColors)[index % Object.values(brandColors).length],
     }
   })
+
+  const total = rawMaterials.reduce((sum, m) => sum + m.count, 0)
+
+  const materialBreakdown = rawMaterials.map((m) => ({
+    ...m,
+    percentage: total > 0 ? (m.count / total) * 100 : 0,
+  }))
 
   const last30Days = Array.from({ length: 30 }, (_, i) => {
     const date = new Date()
@@ -60,7 +64,7 @@ export function generateAnalyticsData(brand: string): AnalyticsData {
     return {
       date: date.toISOString().split("T")[0],
       detections: Math.floor(Math.random() * 100) + 20,
-      accuracy: Math.random() * 0.2 + 0.8, // 80-100%
+      accuracy: Math.random() * 0.2 + 0.8,
     }
   })
 

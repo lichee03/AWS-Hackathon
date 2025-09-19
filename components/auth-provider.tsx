@@ -1,8 +1,8 @@
-
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import jwtDecode from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
+
 
 interface DecodedIdToken {
   sub: string
@@ -63,9 +63,9 @@ interface ProductData {
 
 interface AuthContextType {
   user: User | null
-  login: (token: string) => boolean
-  logout: (token:string)=> boolean
-  signup: (data: CompanyRegistration & { email: string; password: string; role: "brand" | "admin" }) => boolean
+  login: () => void
+  logout: () => void
+  signup: () => void
   updateCompanyData: (data: Partial<CompanyRegistration>) => void
 }
 
@@ -171,12 +171,12 @@ const logout = () => {
 
   const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!
   const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!
-  const logoutUri = "http://localhost:3000/"
+  const logoutUri = `https://us-east-1soapnsqlc.auth.us-east-1.amazoncognito.com/logout?client_id=577rimi4qbt84p573ernvle9bh&logout_uri=<logout uri>`
 
   window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`
 }
 
-
+}
 
 export function useAuth() {
   const context = useContext(AuthContext)

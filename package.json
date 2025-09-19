@@ -37,6 +37,7 @@
     "@radix-ui/react-toggle": "1.1.1",
     "@radix-ui/react-toggle-group": "1.1.1",
     "@radix-ui/react-tooltip": "1.1.6",
+    "@swc/helpers": "^0.5.17",
     "@vercel/analytics": "latest",
     "autoprefixer": "^10.4.20",
     "aws-amplify": "^6.15.6",
@@ -47,6 +48,7 @@
     "embla-carousel-react": "8.5.1",
     "geist": "latest",
     "input-otp": "1.4.1",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.454.0",
     "next": "14.2.16",
     "next-themes": "^0.4.6",
@@ -64,6 +66,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.9",
+    "@types/jwt-decode": "^2.2.1",
     "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
