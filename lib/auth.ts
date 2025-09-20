@@ -15,26 +15,41 @@ export interface BrandData {
   timestamp: string
 }
 
-// Mock JWT verification for MVP - replace with real JWT in production
+// Get the current user from localStorage
+export function getCurrentUser(): User | null {
+  try {
+    const storedUser = localStorage.getItem("fmcg-user")
+    return storedUser ? JSON.parse(storedUser) : null
+  } catch {
+    return null
+  }
+}
+
+// Get the app token from localStorage
+export function getAppToken(): string | null {
+  return localStorage.getItem("fmcg-app-token")
+}
+
+// Verify token against our mock users
 export function verifyToken(token: string): User | null {
   try {
     // Mock implementation - in production, use proper JWT verification
     const mockUsers: Record<string, User> = {
       "coca-cola-token": {
         id: "1",
-        email: "admin@coca-cola.com",
+        email: "lichee03@gmail.com",
         brand: "Coca-Cola",
         role: "brand",
       },
       "pepsi-token": {
         id: "2",
-        email: "admin@pepsi.com",
+        email: "rachelfong.tw@gmail.com",
         brand: "Pepsi",
         role: "brand",
       },
       "admin-token": {
         id: "3",
-        email: "admin@fmcg-platform.com",
+        email: "rachelteoh14@gmail.com",
         brand: "all",
         role: "admin",
       },
