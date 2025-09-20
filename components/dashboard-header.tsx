@@ -8,6 +8,9 @@ import { useAuth } from "@/components/auth-provider"
 
 export function DashboardHeader() {
   const { user } = useAuth()
+  const now = new Date()
+  const month = now.toLocaleString("default", { month: "short" }) // e.g. "Sep"
+  const year = now.getFullYear() // e.g. 2025
 
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
@@ -24,14 +27,14 @@ export function DashboardHeader() {
         {/* Date Range */}
         <Button variant="outline" size="sm" className="text-gray-600 bg-transparent">
           <Calendar className="mr-2 h-4 w-4" />
-          Jan 2024
+          {month} {year}
         </Button>
 
-        {/* Add Widget */}
+        {/* Add Widget
         <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
           <Plus className="mr-2 h-4 w-4" />
           Add Widget
-        </Button>
+        </Button> */}
 
         {/* Notifications */}
         <Button variant="ghost" size="sm" className="relative">

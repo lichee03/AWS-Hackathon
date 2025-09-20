@@ -117,7 +117,7 @@ export function ExportDialog({ trigger }: ExportDialogProps) {
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg flex items-center">
                     <FileText className="mr-2 h-5 w-5" />
-                    ESG Report
+                    ESG Metrics
                   </CardTitle>
                   {exportType === "esg" && <Badge>Selected</Badge>}
                 </div>

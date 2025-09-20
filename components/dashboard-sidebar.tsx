@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation"
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
   { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-  { name: "Trends", href: "/dashboard/trends", icon: TrendingUp },
+  // { name: "Trends", href: "/dashboard/trends", icon: TrendingUp },
   { name: "Update Details", href: "/dashboard/reports", icon: FileText },
   { name: "Export", href: "/dashboard/export", icon: Download },
 ]

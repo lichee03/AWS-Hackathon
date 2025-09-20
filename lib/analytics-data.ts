@@ -68,7 +68,7 @@ export function generateAnalyticsData(brand: string): AnalyticsData {
     }
   })
 
-  const confidenceRanges = ["90-100%", "80-89%", "70-79%", "60-69%", "<60%"]
+  const confidenceRanges = ["<60%", "60-69%","70-79%","80-89%","90-100%"]
   const confidenceDistribution = confidenceRanges.map((range) => ({
     range,
     count: Math.floor(Math.random() * 300) + 50,

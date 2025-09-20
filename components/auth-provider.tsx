@@ -284,11 +284,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null)
 
     // Optional: Redirect to Cognito logout
-    const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!
-    const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!
-    const logoutUri = process.env.NEXT_PUBLIC_COGNITO_LOGOUT_URI!
+    // const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!
+    // const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!
+    // const logoutUri = process.env.NEXT_PUBLIC_COGNITO_LOGOUT_URI||"http://localhost:3000"!
     
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`
+    window.location.href = `http://localhost:3000`
   }
 
   return (

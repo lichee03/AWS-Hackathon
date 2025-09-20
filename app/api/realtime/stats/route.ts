@@ -18,7 +18,8 @@ export async function GET(request: NextRequest) {
     if (!user || (brand && !hasAccessToBrand(user, brand))) {
       return NextResponse.json({ error: "Access denied" }, { status: 403 })
     }
-
+console.log("User verified for brand hello:", brand)
+console.log("User details:", user.brand)
     // Get real-time statistics from DynamoDB
     const stats = await dynamoClient.getRealtimeStats(brand || user.brand)
 

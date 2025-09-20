@@ -13,7 +13,6 @@ interface RealtimeStats {
 }
 
 export function useRealtimeStats(refreshInterval = 30000) {
-  // 30 seconds
   const { user } = useAuth()
   const [stats, setStats] = useState<RealtimeStats | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -21,11 +20,11 @@ export function useRealtimeStats(refreshInterval = 30000) {
 
   const fetchStats = useCallback(async () => {
     if (!user) return
-
+    console.log("Fetching stats for brand:", user.brand)
     try {
-      const token = localStorage.getItem("auth-token")
+      const token = localStorage.getItem("fmcg-app-token")
       if (!token) throw new Error("No auth token")
-
+console.log("Using token:", token)
       const response = await fetch(`/api/realtime/stats?brand=${user.brand}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -37,10 +36,17 @@ export function useRealtimeStats(refreshInterval = 30000) {
       }
 
       const data = await response.json()
+      
+      // Check if the response contains an error from the API
+      if (data.error) {
+        throw new Error(data.error)
+      }
+      
       setStats(data)
       setError(null)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error")
+      console.error("Error fetching stats:", err)
     } finally {
       setIsLoading(false)
     }

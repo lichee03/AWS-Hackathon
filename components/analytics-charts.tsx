@@ -14,7 +14,7 @@ import {
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-  Legend,
+  Legend,Tooltip
 } from "recharts"
 import type { AnalyticsData } from "@/lib/analytics-data"
 
@@ -37,11 +37,11 @@ export function AnalyticsCharts({ data, brand }: AnalyticsChartsProps) {
             config={{
               detections: {
                 label: "Detections",
-                color: "#9392956B",
+                color: "#F1F784",
               },
               confidence: {
                 label: "Confidence",
-                color: "#6D6CECEEE8",
+                color: "#6B6D6C",
               },
             }}
             className="h-[300px]"
@@ -86,19 +86,42 @@ export function AnalyticsCharts({ data, brand }: AnalyticsChartsProps) {
           >
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie
+                {/* <Pie
                   data={data.materialBreakdown}
                   cx="50%"
                   cy="50%"
                   outerRadius={80}
                   dataKey="count"
-                  // label={({ material, percentage }) => `${material}: ${percentage.toFixed(1)}%`}
+                   label={({ material, percentage }) => `${material}: ${percentage.toFixed(1)}%`}
                 >
                   {data.materialBreakdown.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
-                </Pie>
-                <ChartTooltip content={<ChartTooltipContent />} />
+                </Pie> */}
+               <Pie
+  data={data.materialBreakdown}
+  cx="40%"
+  cy="40%"
+  outerRadius={90}
+  dataKey="count"
+  label={({ material, percentage, x, y }) => (
+    <text
+      x={x}
+      y={y}
+      fill="#000" // black text
+      textAnchor="middle"
+      dominantBaseline="central"
+      fontSize={12}
+    >
+      {`${material}: ${percentage.toFixed(1)}%`}
+    </text>
+  )}
+>
+  {data.materialBreakdown.map((entry, index) => {
+    const colors = ["#ECEEE8", "#DEE6DA", "#D9DFE9", "#F1F784", "#AFB498"]
+    return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+  })}
+</Pie>       <ChartTooltip content={<ChartTooltipContent />} />
               </PieChart>
             </ResponsiveContainer>
           </ChartContainer>
@@ -116,7 +139,7 @@ export function AnalyticsCharts({ data, brand }: AnalyticsChartsProps) {
             config={{
               detections: {
                 label: "Daily Detections",
-                color: "#D9DFE9F1",
+                color: "#AFB498",
               },
               accuracy: {
                 label: "Accuracy",
@@ -126,7 +149,8 @@ export function AnalyticsCharts({ data, brand }: AnalyticsChartsProps) {
             className="h-[300px]"
           >
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data.timeSeriesData}>
+              <LineChart data={data.timeSeriesData}
+              margin={{ top: 20, right: 20, left: -20, bottom: 20 }} >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
                   dataKey="date"
@@ -175,14 +199,14 @@ export function AnalyticsCharts({ data, brand }: AnalyticsChartsProps) {
             className="h-[200px]"
           >
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data.confidenceDistribution} layout="horizontal">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis dataKey="range" type="category" />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="count" fill="var(--color-count)" />
-              </BarChart>
-            </ResponsiveContainer>
+        <BarChart data={data.confidenceDistribution} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="range" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="count" fill="#81cfd1ff" radius={[6, 6, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
           </ChartContainer>
         </CardContent>
       </Card>
