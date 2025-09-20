@@ -37,16 +37,27 @@ export function generateCSV(data: BrandData[], filename: string): void {
 }
 
 export function calculateESGMetrics(data: BrandData[]): ESGMetrics {
-  const recyclableMaterials = ["Aluminum Can", "Glass Bottle", "Cardboard"]
-  const recyclableCount = data.filter((item) => recyclableMaterials.includes(item.material)).length
+  if (!data || data.length === 0) {
+    return {
+      recyclablePercentage: 0,
+      carbonFootprint: 100,       // assume max footprint if no data
+      sustainabilityScore: 0,
+      materialEfficiency: 0,
+      wasteReduction: 0,
+    }
+  }
+const recyclableMaterials = ["Aluminum Can", "Glass Bottle", "Cardboard"]
+  const recyclableCount = data.filter((item) =>
+    recyclableMaterials.includes(item.material),
+  ).length
 
   const recyclablePercentage = (recyclableCount / data.length) * 100
 
   // Mock calculations for other metrics
   const carbonFootprint = Math.max(0, 100 - recyclablePercentage * 0.8)
   const sustainabilityScore = Math.min(100, recyclablePercentage * 1.2)
-  const materialEfficiency = Math.random() * 20 + 75 // 75-95%
-  const wasteReduction = Math.random() * 15 + 10 // 10-25%
+  const materialEfficiency = Math.random() * 20 + 75 // 75–95%
+  const wasteReduction = Math.random() * 15 + 10    // 10–25%
 
   return {
     recyclablePercentage,

@@ -1,5 +1,5 @@
 "use client"
-
+import { generateESGPdfReport } from "@/lib/pdf-export"
 import type React from "react"
 
 import { useState } from "react"
@@ -39,38 +39,49 @@ export function ExportDialog({ trigger }: ExportDialogProps) {
   if (!user) return null
 
   const handleExport = async () => {
-    setIsExporting(true)
+  setIsExporting(true);
 
-    try {
-      // Filter data based on user access
-      const accessibleData = mockBrandData.filter((item) => hasAccessToBrand(user, item.name))
+  try {
+    const accessibleData = mockBrandData.filter((item) => hasAccessToBrand(user, item.name))
 
-      if (exportType === "csv") {
-        const filename = `${user.brand}-analytics-${format(new Date(), "yyyy-MM-dd")}`
-        generateCSV(accessibleData, filename)
-      } else {
-        const metrics = calculateESGMetrics(accessibleData)
-        const report = generateESGReport(user.brand, accessibleData, metrics)
 
-        // Download as text file
-        const blob = new Blob([report], { type: "text/markdown;charset=utf-8;" })
-        const link = document.createElement("a")
-        const url = URL.createObjectURL(blob)
-        link.setAttribute("href", url)
-        link.setAttribute("download", `${user.brand}-ESG-Report-${format(new Date(), "yyyy-MM-dd")}.md`)
-        link.style.visibility = "hidden"
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-      }
+    if (exportType === "csv") {
+      const filename = `${user.brand}-analytics-${format(
+        new Date(),
+        "yyyy-MM-dd"
+      )}`;
+      generateCSV(accessibleData, filename);
+    } else if (exportType === "esg") {
+      const metrics = calculateESGMetrics(accessibleData)
 
-      setIsOpen(false)
-    } catch (error) {
-      console.error("Export failed:", error)
-    } finally {
-      setIsExporting(false)
+      const breakdown = [
+        { material: "PET Plastic", percentage: 40 },
+        { material: "Aluminum", percentage: 35 },
+        { material: "Glass", percentage: 15 },
+        { material: "Carton/Others", percentage: 10 },
+      ];
+
+      const compliance = [
+        { name: "EU Packaging Directive", status: "Compliant" },
+        { name: "Circular Economy Action Plan", status: "Aligned" },
+        { name: "Carbon Neutrality Targets", status: "In Progress" },
+        { name: "Material Disclosure Requirements", status: "Reported" },
+      ];
+
+      const pdf = generateESGPdfReport(user.brand,metrics, breakdown, compliance);
+
+      pdf.save(
+        `${user.brand}-ESG-Report-${format(new Date(), "yyyy-MM-dd")}.pdf`
+      );
     }
+
+    setIsOpen(false);
+  } catch (error) {
+    console.error("Export failed:", error);
+  } finally {
+    setIsExporting(false);
   }
+};
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -178,7 +189,7 @@ export function ExportDialog({ trigger }: ExportDialogProps) {
             <h4 className="font-medium mb-2">Export Preview</h4>
             <div className="text-sm text-gray-600 space-y-1">
               <p>
-                <strong>Format:</strong> {exportType === "csv" ? "CSV File" : "ESG Report (Markdown)"}
+                <strong>Format:</strong> {exportType === "csv" ? "CSV File" : "ESG Metrics Export (Markdown)"}
               </p>
               <p>
                 <strong>Brand:</strong> {user.brand}
@@ -208,7 +219,7 @@ export function ExportDialog({ trigger }: ExportDialogProps) {
               ) : (
                 <>
                   <Download className="mr-2 h-4 w-4" />
-                  Export {exportType === "csv" ? "CSV" : "ESG Report"}
+                  Export {exportType === "csv" ? "CSV" : "ESG Metrics Export"}
                 </>
               )}
             </Button>

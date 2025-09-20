@@ -26,9 +26,9 @@ export default function ExportPage() {
   if (!user) return null
 
   const exportHistory = [
-    { id: 1, type: "CSV", date: "2024-01-15", records: 1250, status: "completed" },
-    { id: 2, type: "ESG Report", date: "2024-01-10", records: 980, status: "completed" },
-    { id: 3, type: "CSV", date: "2024-01-05", records: 2100, status: "completed" },
+    { id: 1, type: "CSV", date: "2025-01-15", records: 1250, status: "completed" },
+    { id: 2, type: "ESG Metrics Export", date: "2025-01-10", records: 980, status: "completed" },
+    { id: 3, type: "CSV", date: "2025-01-05", records: 2100, status: "completed" },
   ]
 
   return (
@@ -95,7 +95,7 @@ export default function ExportPage() {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <FileText className="mr-2 h-5 w-5 text-green-600" />
-                ESG Sustainability Report
+                ESG Metrics Export
               </CardTitle>
               <CardDescription>Generate comprehensive sustainability reports</CardDescription>
             </CardHeader>
@@ -123,7 +123,7 @@ export default function ExportPage() {
                 trigger={
                   <Button variant="outline" className="w-full bg-transparent">
                     <FileText className="mr-2 h-4 w-4" />
-                    Generate ESG Report
+                    ESG Metrics Export
                   </Button>
                 }
               />
